@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Sun, Moon } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 
 const navLinks = [
   { href: '#inicio', label: 'Inicio' },
@@ -12,6 +13,7 @@ const navLinks = [
 ]
 
 export default function Navbar() {
+  const { theme, toggle } = useTheme()
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -62,22 +64,48 @@ export default function Navbar() {
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gold rounded-full transition-all duration-300 group-hover:w-6" />
               </a>
             ))}
+            <button
+              onClick={toggle}
+              className="ml-3 w-9 h-9 flex items-center justify-center rounded-full border border-cream/20 text-cream/60 hover:text-gold hover:border-gold/40 transition-all duration-300"
+              aria-label={theme === 'light' ? 'Modo oscuro' : 'Modo claro'}
+            >
+              <AnimatePresence mode="wait">
+                {theme === 'light' ? (
+                  <motion.div key="moon" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <Moon size={16} />
+                  </motion.div>
+                ) : (
+                  <motion.div key="sun" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <Sun size={16} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
             <a
               href="#reservas"
-              className="ml-4 px-6 py-2.5 bg-gold text-dark text-sm font-semibold rounded-full hover:bg-gold-light transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 active:scale-95"
+              className="ml-2 px-6 py-2.5 bg-gold text-dark text-sm font-semibold rounded-full hover:bg-gold-light transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 active:scale-95"
             >
               Reservar
             </a>
           </div>
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden text-cream p-2 hover:text-gold transition-colors"
-            aria-label="Menú de navegación"
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile Right */}
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggle}
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-cream/20 text-cream/60 hover:text-gold transition-all duration-300"
+              aria-label={theme === 'light' ? 'Modo oscuro' : 'Modo claro'}
+            >
+              {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+            </button>
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="text-cream p-2 hover:text-gold transition-colors"
+              aria-label="Menú de navegación"
+            >
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 

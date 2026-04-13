@@ -1,4 +1,5 @@
 import { HashRouter, Routes, Route } from 'react-router-dom'
+import { ThemeProvider, useTheme } from './context/ThemeContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -10,9 +11,10 @@ import Footer from './components/Footer'
 import Chatbot from './components/Chatbot'
 import LadoB from './pages/LadoB'
 
-function LaLenaCriolla() {
+function LaLenaCriollaInner() {
+  const { theme } = useTheme()
   return (
-    <>
+    <div className={theme === 'dark' ? 'lena-dark' : ''}>
       <Navbar />
       <main>
         <Hero />
@@ -24,7 +26,15 @@ function LaLenaCriolla() {
       </main>
       <Footer />
       <Chatbot />
-    </>
+    </div>
+  )
+}
+
+function LaLenaCriolla() {
+  return (
+    <ThemeProvider defaultTheme="light">
+      <LaLenaCriollaInner />
+    </ThemeProvider>
   )
 }
 

@@ -42,7 +42,7 @@ export default function Reservations() {
   const today = new Date().toISOString().split('T')[0]
 
   return (
-    <section id="reservas" className="py-24 md:py-32 bg-cream relative overflow-hidden">
+    <section id="reservas" className="lena-reservas py-24 md:py-32 bg-cream relative overflow-hidden transition-colors duration-500">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 

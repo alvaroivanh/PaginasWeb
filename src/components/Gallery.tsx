@@ -39,7 +39,7 @@ export default function Gallery() {
   const [lightbox, setLightbox] = useState<number | null>(null)
 
   return (
-    <section id="galeria" className="py-24 md:py-32 bg-cream-dark">
+    <section id="galeria" className="lena-gallery py-24 md:py-32 bg-cream-dark transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div

@@ -63,3 +63,54 @@ body {
   outline-offset: 2px;
   border-radius: 2px;
 }
+
+/* ─── La Leña Criolla Dark Mode ─── */
+.lena-dark .lena-about { background: #1A1A1A; }
+.lena-dark .lena-about h2,
+.lena-dark .lena-about h3 { color: #FFF8F0; }
+.lena-dark .lena-about p { color: #8A7E72; }
+.lena-dark .lena-about .bg-white { background: #2A2A2A; }
+
+.lena-dark .lena-gallery { background: #111111; }
+.lena-dark .lena-gallery h2 { color: #FFF8F0; }
+
+.lena-dark .lena-reservas { background: #1A1A1A; }
+.lena-dark .lena-reservas h2 { color: #FFF8F0; }
+.lena-dark .lena-reservas p { color: #8A7E72; }
+.lena-dark .lena-reservas form { background: #2A2A2A; border: 1px solid rgba(255,255,255,0.05); }
+.lena-dark .lena-reservas label { color: rgba(255,248,240,0.6); }
+.lena-dark .lena-reservas input,
+.lena-dark .lena-reservas select,
+.lena-dark .lena-reservas textarea {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.08);
+  color: #FFF8F0;
+}
+.lena-dark .lena-reservas input::placeholder,
+.lena-dark .lena-reservas textarea::placeholder { color: rgba(255,248,240,0.25); }
+
+/* ─── Lado B Dark Mode ─── */
+.ladob-dark { background: #0A0A0A !important; color: #F5F5F5 !important; }
+.ladob-dark nav { background: rgba(10,10,10,0.95) !important; border-color: rgba(255,255,255,0.06) !important; }
+.ladob-dark .ladob-logo { color: #F5F5F5 !important; }
+.ladob-dark .ladob-card { border-color: rgba(255,255,255,0.08) !important; }
+.ladob-dark .ladob-card:hover { border-color: rgba(255,255,255,0.18) !important; }
+.ladob-dark .ladob-card h3 { color: #F5F5F5 !important; }
+.ladob-dark .ladob-card span.tabular-nums { color: #F5F5F5 !important; }
+.ladob-dark .ladob-card p { color: rgba(255,255,255,0.35) !important; }
+.ladob-dark .ladob-divider { background: rgba(255,255,255,0.06) !important; }
+.ladob-dark .ladob-tab-inactive { background: rgba(255,255,255,0.04) !important; color: rgba(255,255,255,0.45) !important; }
+.ladob-dark .ladob-tab-inactive:hover { background: rgba(255,255,255,0.07) !important; }
+.ladob-dark .ladob-tab-active { background: #F5F5F5 !important; color: #0A0A0A !important; }
+.ladob-dark .ladob-muted { color: rgba(255,255,255,0.3) !important; }
+.ladob-dark .ladob-subtle { color: rgba(255,255,255,0.5) !important; }
+.ladob-dark .ladob-btn-primary { background: #F5F5F5 !important; color: #0A0A0A !important; }
+.ladob-dark .ladob-btn-primary:hover { background: #E0E0E0 !important; }
+.ladob-dark .ladob-btn-outline { border-color: rgba(255,255,255,0.15) !important; color: #F5F5F5 !important; }
+.ladob-dark .ladob-btn-outline:hover { border-color: rgba(255,255,255,0.3) !important; }
+.ladob-dark footer { border-color: rgba(255,255,255,0.05) !important; }
+.ladob-dark .ladob-footer-logo { color: rgba(255,255,255,0.2) !important; }
+.ladob-dark .ladob-info-icon { color: rgba(255,255,255,0.2) !important; }
+.ladob-dark .ladob-info-label { color: rgba(255,255,255,0.25) !important; }
+.ladob-dark .ladob-info-value { color: #F5F5F5 !important; }
+.ladob-dark .ladob-info-sub { color: rgba(255,255,255,0.4) !important; }

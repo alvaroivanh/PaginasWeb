@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin, Phone, Clock, Send, X, MessageCircle } from 'lucide-react'
+import { MapPin, Phone, Clock, Send, X, MessageCircle, Sun, Moon } from 'lucide-react'
 import { ladoBCategories, formatCOP } from '../data/ladob-menu'
+import { ThemeProvider, useTheme } from '../context/ThemeContext'
 
 /* ─── Logo Component ─── */
 function LadoBLogo({ className = '' }: { className?: string }) {
@@ -164,41 +165,71 @@ function ChatbotLadoB() {
 /* ─────────────────────────────────────────────────────
    MAIN PAGE
    ───────────────────────────────────────────────────── */
-export default function LadoB() {
+function LadoBInner() {
+  const { theme, toggle } = useTheme()
+  const dark = theme === 'dark'
   const [activeCategory, setActiveCategory] = useState(ladoBCategories[0].id)
   const current = ladoBCategories.find((c) => c.id === activeCategory)!
 
   return (
-    <div className="min-h-screen bg-white text-black" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+    <div className={`min-h-screen transition-colors duration-500 ${dark ? 'ladob-dark' : ''}`} style={{ fontFamily: "'Inter', system-ui, sans-serif", background: dark ? '#0A0A0A' : '#fff', color: dark ? '#F5F5F5' : '#000' }}>
 
       {/* ── Nav ── */}
       <nav className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-black/5">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
           <a href="#top" className="block">
-            <LadoBLogo className="text-[6px] text-black" />
+            <LadoBLogo className={`text-[6px] ladob-logo ${dark ? 'text-white' : 'text-black'} transition-colors duration-500`} />
           </a>
           <div className="hidden sm:flex items-center gap-8 text-xs font-medium uppercase tracking-[0.15em] text-black/50">
-            <a href="#menu-section" className="hover:text-black transition-colors">Menú</a>
-            <a href="#ubicacion" className="hover:text-black transition-colors">Ubicación</a>
+            <a href="#menu-section" className="hover:text-black transition-colors ladob-subtle">Menú</a>
+            <a href="#ubicacion" className="hover:text-black transition-colors ladob-subtle">Ubicación</a>
+            <button
+              onClick={toggle}
+              className={`w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300 ${dark ? 'border-white/15 text-white/50 hover:text-white hover:border-white/30' : 'border-black/10 text-black/40 hover:text-black hover:border-black/25'}`}
+              aria-label={dark ? 'Modo claro' : 'Modo oscuro'}
+            >
+              <AnimatePresence mode="wait">
+                {dark ? (
+                  <motion.div key="sun" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <Sun size={14} />
+                  </motion.div>
+                ) : (
+                  <motion.div key="moon" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <Moon size={14} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
             <a
               href="https://wa.me/573156904000"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 bg-black text-white px-4 py-2 rounded-full hover:bg-black/80 transition-colors tracking-normal normal-case text-xs font-semibold"
+              className="flex items-center gap-1.5 ladob-btn-primary px-4 py-2 rounded-full tracking-normal normal-case text-xs font-semibold transition-colors"
+              style={{ background: dark ? '#F5F5F5' : '#000', color: dark ? '#0A0A0A' : '#fff' }}
             >
               <WhatsAppIcon size={14} />
               Pedir
             </a>
           </div>
-          <a
-            href="https://wa.me/573156904000"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="sm:hidden flex items-center gap-1.5 bg-black text-white px-3.5 py-2 rounded-full text-xs font-semibold"
-          >
-            <WhatsAppIcon size={14} />
-            Pedir
-          </a>
+          <div className="sm:hidden flex items-center gap-2">
+            <button
+              onClick={toggle}
+              className={`w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300 ${dark ? 'border-white/15 text-white/50' : 'border-black/10 text-black/40'}`}
+              aria-label={dark ? 'Modo claro' : 'Modo oscuro'}
+            >
+              {dark ? <Sun size={14} /> : <Moon size={14} />}
+            </button>
+            <a
+              href="https://wa.me/573156904000"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold transition-colors"
+              style={{ background: dark ? '#F5F5F5' : '#000', color: dark ? '#0A0A0A' : '#fff' }}
+            >
+              <WhatsAppIcon size={14} />
+              Pedir
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -211,21 +242,21 @@ export default function LadoB() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <LadoBLogo className="text-[28px] sm:text-[40px] md:text-[56px] text-black" />
+            <LadoBLogo className={`text-[28px] sm:text-[40px] md:text-[56px] ladob-logo ${dark ? 'text-white' : 'text-black'} transition-colors duration-500`} />
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="mt-6 w-12 h-px bg-black/15"
+            className={`mt-6 w-12 h-px ladob-divider ${dark ? 'bg-white/15' : 'bg-black/15'}`}
           />
 
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="mt-6 text-black/40 text-sm md:text-base font-light tracking-wide max-w-md"
+            className="mt-6 ladob-muted text-sm md:text-base font-light tracking-wide max-w-md"
           >
             Hamburguesas artesanales. Opciones plant-based.
             <br />
@@ -240,7 +271,8 @@ export default function LadoB() {
           >
             <a
               href="#menu-section"
-              className="px-7 py-3 bg-black text-white text-sm font-semibold rounded-full hover:bg-black/85 active:scale-95 transition-all"
+              className="px-7 py-3 ladob-btn-primary text-sm font-semibold rounded-full active:scale-95 transition-all"
+              style={{ background: dark ? '#F5F5F5' : '#000', color: dark ? '#0A0A0A' : '#fff' }}
             >
               Ver menú
             </a>
@@ -248,7 +280,7 @@ export default function LadoB() {
               href="https://wa.me/573156904000"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-7 py-3 border border-black/15 text-black text-sm font-semibold rounded-full hover:border-black/30 active:scale-95 transition-all"
+              className={`flex items-center gap-2 px-7 py-3 border ladob-btn-outline text-sm font-semibold rounded-full active:scale-95 transition-all ${dark ? 'border-white/15 text-white' : 'border-black/15 text-black'}`}
             >
               <WhatsAppIcon size={16} />
               WhatsApp
@@ -259,7 +291,7 @@ export default function LadoB() {
 
       {/* ── Divider ── */}
       <div className="max-w-5xl mx-auto px-6">
-        <div className="h-px bg-black/5" />
+        <div className={`h-px ladob-divider ${dark ? 'bg-white/5' : 'bg-black/5'}`} />
       </div>
 
       {/* ── Menu ── */}
@@ -274,7 +306,7 @@ export default function LadoB() {
           <h2 className="text-3xl md:text-4xl font-[800] uppercase tracking-tight">
             Menú
           </h2>
-          <p className="mt-2 text-black/35 text-sm">
+          <p className="mt-2 ladob-muted text-sm">
             Precios en COP. Combos incluyen papas + bebida.
           </p>
         </motion.div>
@@ -287,8 +319,8 @@ export default function LadoB() {
               onClick={() => setActiveCategory(cat.id)}
               className={`px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition-all ${
                 activeCategory === cat.id
-                  ? 'bg-black text-white'
-                  : 'bg-black/[0.03] text-black/50 hover:bg-black/[0.06] hover:text-black/70'
+                  ? `ladob-tab-active ${dark ? 'bg-white text-black' : 'bg-black text-white'}`
+                  : `ladob-tab-inactive ${dark ? 'bg-white/[0.04] text-white/45' : 'bg-black/[0.03] text-black/50'}`
               }`}
             >
               {cat.name}
@@ -312,7 +344,7 @@ export default function LadoB() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05, duration: 0.3 }}
-                className="group border border-black/[0.06] rounded-xl p-5 hover:border-black/15 transition-all duration-200"
+                className={`group ladob-card border rounded-xl p-5 transition-all duration-200 ${dark ? 'border-white/[0.08] hover:border-white/[0.18]' : 'border-black/[0.06] hover:border-black/15'}`}
               >
                 <div className="flex justify-between items-start gap-4">
                   <div className="flex-1 min-w-0">
@@ -347,7 +379,8 @@ export default function LadoB() {
             href="https://wa.me/573156904000?text=Hola!%20Quiero%20hacer%20un%20pedido"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 bg-black text-white text-sm font-semibold rounded-full hover:bg-black/85 active:scale-95 transition-all"
+            className="inline-flex items-center gap-2 px-8 py-3.5 ladob-btn-primary text-sm font-semibold rounded-full active:scale-95 transition-all"
+            style={{ background: dark ? '#F5F5F5' : '#000', color: dark ? '#0A0A0A' : '#fff' }}
           >
             <WhatsAppIcon size={16} />
             Hacer pedido por WhatsApp
@@ -357,7 +390,7 @@ export default function LadoB() {
 
       {/* ── Divider ── */}
       <div className="max-w-5xl mx-auto px-6">
-        <div className="h-px bg-black/5" />
+        <div className={`h-px ladob-divider ${dark ? 'bg-white/5' : 'bg-black/5'}`} />
       </div>
 
       {/* ── Info ── */}
@@ -374,29 +407,29 @@ export default function LadoB() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="flex items-start gap-3">
-              <MapPin size={18} className="text-black/25 mt-0.5 flex-shrink-0" />
+              <MapPin size={18} className="ladob-info-icon mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-black/30 mb-1">Dirección</p>
-                <p className="text-sm font-medium">Puente Largo</p>
-                <p className="text-sm text-black/50">Bogotá D.C., Colombia</p>
+                <p className="text-xs font-semibold uppercase tracking-wider ladob-info-label mb-1">Dirección</p>
+                <p className="text-sm font-medium ladob-info-value">Puente Largo</p>
+                <p className="text-sm ladob-info-sub">Bogotá D.C., Colombia</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Clock size={18} className="text-black/25 mt-0.5 flex-shrink-0" />
+              <Clock size={18} className="ladob-info-icon mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-black/30 mb-1">Horarios</p>
-                <p className="text-sm font-medium">12:15 — 22:00</p>
-                <p className="text-sm text-black/50">Varía según el día</p>
+                <p className="text-xs font-semibold uppercase tracking-wider ladob-info-label mb-1">Horarios</p>
+                <p className="text-sm font-medium ladob-info-value">12:15 — 22:00</p>
+                <p className="text-sm ladob-info-sub">Varía según el día</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Phone size={18} className="text-black/25 mt-0.5 flex-shrink-0" />
+              <Phone size={18} className="ladob-info-icon mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-black/30 mb-1">Contacto</p>
-                <p className="text-sm font-medium">315 690 4000</p>
-                <p className="text-sm text-black/50">WhatsApp / Llamadas</p>
+                <p className="text-xs font-semibold uppercase tracking-wider ladob-info-label mb-1">Contacto</p>
+                <p className="text-sm font-medium ladob-info-value">315 690 4000</p>
+                <p className="text-sm ladob-info-sub">WhatsApp / Llamadas</p>
               </div>
             </div>
           </div>
@@ -406,7 +439,7 @@ export default function LadoB() {
               href="https://wa.me/573156904000"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 border border-black/10 rounded-full text-sm font-medium hover:border-black/25 transition-colors"
+              className={`inline-flex items-center gap-2 px-5 py-2.5 border ladob-btn-outline rounded-full text-sm font-medium transition-colors ${dark ? 'border-white/15 text-white' : 'border-black/10 text-black'}`}
             >
               <WhatsAppIcon size={16} />
               WhatsApp
@@ -415,7 +448,7 @@ export default function LadoB() {
               href="https://queresto.com/ladobhamburguesas"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 border border-black/10 rounded-full text-sm font-medium hover:border-black/25 transition-colors"
+              className={`inline-flex items-center gap-2 px-5 py-2.5 border ladob-btn-outline rounded-full text-sm font-medium transition-colors ${dark ? 'border-white/15 text-white' : 'border-black/10 text-black'}`}
             >
               Menú completo en QueResto
             </a>
@@ -426,7 +459,7 @@ export default function LadoB() {
       {/* ── Footer ── */}
       <footer className="border-t border-black/5">
         <div className="max-w-5xl mx-auto px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <LadoBLogo className="text-[5px] text-black/30" />
+          <LadoBLogo className="text-[5px] ladob-footer-logo" />
           <p className="text-[11px] text-black/20 tracking-wide">
             &copy; {new Date().getFullYear()} Lado B Hamburguesas. Bogotá, Colombia.
           </p>
@@ -435,5 +468,13 @@ export default function LadoB() {
 
       <ChatbotLadoB />
     </div>
+  )
+}
+
+export default function LadoB() {
+  return (
+    <ThemeProvider defaultTheme="light">
+      <LadoBInner />
+    </ThemeProvider>
   )
 }

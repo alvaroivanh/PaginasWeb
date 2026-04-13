@@ -21,7 +21,7 @@ const values = [
 
 export default function About() {
   return (
-    <section id="nosotros" className="py-24 md:py-32 bg-cream">
+    <section id="nosotros" className="lena-about py-24 md:py-32 bg-cream transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center mb-20 md:mb-28">
