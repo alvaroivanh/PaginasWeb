@@ -177,12 +177,12 @@ function LadoBInner() {
       {/* ── Nav ── */}
       <nav className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-sm border-b border-black/5">
         <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#top" className="block">
+          <button onClick={() => document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' })} className="block">
             <LadoBLogo className={`text-[6px] ladob-logo ${dark ? 'text-white' : 'text-black'} transition-colors duration-500`} />
-          </a>
+          </button>
           <div className="hidden sm:flex items-center gap-8 text-xs font-medium uppercase tracking-[0.15em] text-black/50">
-            <a href="#menu-section" className="hover:text-black transition-colors ladob-subtle">Menú</a>
-            <a href="#ubicacion" className="hover:text-black transition-colors ladob-subtle">Ubicación</a>
+            <button onClick={() => document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-black transition-colors ladob-subtle">Menú</button>
+            <button onClick={() => document.getElementById('ubicacion')?.scrollIntoView({ behavior: 'smooth' })} className="hover:text-black transition-colors ladob-subtle">Ubicación</button>
             <button
               onClick={toggle}
               className={`w-8 h-8 flex items-center justify-center rounded-full border transition-all duration-300 ${dark ? 'border-white/15 text-white/50 hover:text-white hover:border-white/30' : 'border-black/10 text-black/40 hover:text-black hover:border-black/25'}`}
@@ -269,13 +269,13 @@ function LadoBInner() {
             transition={{ delay: 0.6, duration: 0.5 }}
             className="mt-10 flex gap-3"
           >
-            <a
-              href="#menu-section"
+            <button
+              onClick={() => document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' })}
               className="px-7 py-3 ladob-btn-primary text-sm font-semibold rounded-full active:scale-95 transition-all"
               style={{ background: dark ? '#F5F5F5' : '#000', color: dark ? '#0A0A0A' : '#fff' }}
             >
               Ver menú
-            </a>
+            </button>
             <a
               href="https://wa.me/573156904000"
               target="_blank"
