@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Sun, Moon } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
 const navLinks = [
-  { href: '#inicio', label: 'Inicio' },
-  { href: '#nosotros', label: 'Nosotros' },
-  { href: '#menu', label: 'Menú' },
-  { href: '#galeria', label: 'Galería' },
-  { href: '#reservas', label: 'Reservas' },
-  { href: '#contacto', label: 'Contacto' },
+  { id: 'inicio', label: 'Inicio' },
+  { id: 'nosotros', label: 'Nosotros' },
+  { id: 'menu', label: 'Menú' },
+  { id: 'galeria', label: 'Galería' },
+  { id: 'reservas', label: 'Reservas' },
+  { id: 'contacto', label: 'Contacto' },
 ]
 
 export default function Navbar() {
@@ -31,6 +31,14 @@ export default function Navbar() {
     }
   }, [mobileOpen])
 
+  const scrollTo = useCallback((id: string) => {
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+    setMobileOpen(false)
+  }, [])
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -45,24 +53,24 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a
-            href="#inicio"
+          <button
+            onClick={() => scrollTo('inicio')}
             className="font-display text-2xl font-semibold text-cream tracking-wide hover:text-gold transition-colors duration-300"
           >
             La Leña Criolla
-          </a>
+          </button>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <button
+                key={link.id}
+                onClick={() => scrollTo(link.id)}
                 className="relative px-4 py-2 text-sm font-medium text-cream/80 hover:text-gold transition-colors duration-300 group"
               >
                 {link.label}
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gold rounded-full transition-all duration-300 group-hover:w-6" />
-              </a>
+              </button>
             ))}
             <button
               onClick={toggle}
@@ -81,12 +89,12 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
             </button>
-            <a
-              href="#reservas"
+            <button
+              onClick={() => scrollTo('reservas')}
               className="ml-2 px-6 py-2.5 bg-gold text-dark text-sm font-semibold rounded-full hover:bg-gold-light transition-all duration-300 hover:shadow-lg hover:shadow-gold/20 active:scale-95"
             >
               Reservar
-            </a>
+            </button>
           </div>
 
           {/* Mobile Right */}
@@ -121,28 +129,26 @@ export default function Navbar() {
           >
             <div className="px-6 py-6 flex flex-col gap-1">
               {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                <motion.button
+                  key={link.id}
+                  onClick={() => scrollTo(link.id)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05, duration: 0.3 }}
-                  className="py-3 px-4 text-cream/80 hover:text-gold hover:bg-white/5 rounded-lg text-lg transition-all duration-200"
+                  className="py-3 px-4 text-left text-cream/80 hover:text-gold hover:bg-white/5 rounded-lg text-lg transition-all duration-200"
                 >
                   {link.label}
-                </motion.a>
+                </motion.button>
               ))}
-              <motion.a
-                href="#reservas"
-                onClick={() => setMobileOpen(false)}
+              <motion.button
+                onClick={() => scrollTo('reservas')}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.3 }}
                 className="mt-4 px-6 py-3 bg-gold text-dark text-center font-semibold rounded-full hover:bg-gold-light transition-all duration-300"
               >
                 Reservar Mesa
-              </motion.a>
+              </motion.button>
             </div>
           </motion.div>
         )}

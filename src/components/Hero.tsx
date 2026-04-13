@@ -72,25 +72,25 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.9 }}
           className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a
-            href="#reservas"
+          <button
+            onClick={() => document.getElementById('reservas')?.scrollIntoView({ behavior: 'smooth' })}
             className="group relative px-10 py-4 bg-gold text-dark font-semibold text-base rounded-full overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-gold/25 active:scale-95"
           >
             <span className="relative z-10">Reservar Mesa</span>
             <div className="absolute inset-0 bg-gold-light scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100" />
-          </a>
-          <a
-            href="#menu"
+          </button>
+          <button
+            onClick={() => document.getElementById('menu')?.scrollIntoView({ behavior: 'smooth' })}
             className="px-10 py-4 border border-cream/20 text-cream font-medium text-base rounded-full hover:border-gold/50 hover:text-gold transition-all duration-300 active:scale-95"
           >
             Ver Menú
-          </a>
+          </button>
         </motion.div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.a
-        href="#nosotros"
+      <motion.button
+        onClick={() => document.getElementById('nosotros')?.scrollIntoView({ behavior: 'smooth' })}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
@@ -103,7 +103,7 @@ export default function Hero() {
         >
           <ChevronDown size={20} />
         </motion.div>
-      </motion.a>
+      </motion.button>
     </section>
   )
 }

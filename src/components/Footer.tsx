@@ -25,12 +25,12 @@ const socials = [
 ]
 
 const navLinks = [
-  { href: '#inicio', label: 'Inicio' },
-  { href: '#nosotros', label: 'Nosotros' },
-  { href: '#menu', label: 'Menú' },
-  { href: '#galeria', label: 'Galería' },
-  { href: '#reservas', label: 'Reservas' },
-  { href: '#contacto', label: 'Contacto' },
+  { id: 'inicio', label: 'Inicio' },
+  { id: 'nosotros', label: 'Nosotros' },
+  { id: 'menu', label: 'Menú' },
+  { id: 'galeria', label: 'Galería' },
+  { id: 'reservas', label: 'Reservas' },
+  { id: 'contacto', label: 'Contacto' },
 ]
 
 export default function Footer() {
@@ -56,13 +56,13 @@ export default function Footer() {
             </h4>
             <div className="grid grid-cols-2 gap-2">
               {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-cream/60 text-sm hover:text-gold transition-colors duration-200 py-1"
+                <button
+                  key={link.id}
+                  onClick={() => document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' })}
+                  className="text-cream/60 text-sm hover:text-gold transition-colors duration-200 py-1 text-left"
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
             </div>
           </div>
